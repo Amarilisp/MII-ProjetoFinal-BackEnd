@@ -1,2 +1,2 @@
-const { Server } = require('./server')
-new Server()
+const { Server } = require("./server");
+new Server();
