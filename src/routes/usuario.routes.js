@@ -1,16 +1,18 @@
 const { Router } = require("express");
-const { createOneUsuario } = require("../controllers/usuario.controller");
+const {
+  createOneUsuario,
+  listOneUsuario,
+} = require("../controllers/usuario.controller");
 
-class UsuarioRoutes {
+class UsuarioRouter {
   routesFromUsuario() {
-    const usuarioroutes = Router();
-    usuarioroutes.post("/createOneUsuario", createOneUsuario);
-    //UsuarioRoutes.get("/listUsuario/:offset/:limit", listUsuario);
-    // UsuarioRoutes.get("./listOneusuario/:id", listOneUsuario);
-    // UsuarioRoutes.patch("./updateOneUsuario/:id", updateOneUsuario);
-    // UsuarioRoutes.delete("./deleteOneUsuario/:id", deleteUsuario);
+    // todas as rotas references ao usuario vão aparecer aqui - routesFromUsuario vai pro index
+    const usuarioRoutes = Router();
+    usuarioRoutes.post("/createOneUsuario", createOneUsuario),
+      usuarioRoutes.get("/listOneUsuario/:id", listOneUsuario);
 
-    return usuarioroutes;
+    return usuarioRoutes;
   }
 }
-module.exports = new UsuarioRoutes();
+
+module.exports = new UsuarioRouter();
