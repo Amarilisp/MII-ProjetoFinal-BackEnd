@@ -2,6 +2,7 @@ const { Router } = require("express");
 const {
   createOneUsuario,
   listOneUsuario,
+  loginUsuario,
 } = require("../controllers/usuario.controller");
 
 class UsuarioRouter {
@@ -10,6 +11,7 @@ class UsuarioRouter {
     const usuarioRoutes = Router();
     usuarioRoutes.post("/createOneUsuario", createOneUsuario),
       usuarioRoutes.get("/listOneUsuario/:id", listOneUsuario);
+    usuarioRoutes.post("/loginUsuario", loginUsuario);
 
     return usuarioRoutes;
   }

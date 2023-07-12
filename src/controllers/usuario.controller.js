@@ -1,4 +1,5 @@
 const { Usuario } = require("../models/usuario");
+const jwt = require("jsonwebtoken");
 
 class UsuarioController {
   async createOneUsuario(request, response) {
@@ -61,8 +62,38 @@ class UsuarioController {
     });
   }
 
-  // criar o login usuario
+  async loginUsuario(request, response) {
+    const { email, senha } = request.body;
+    try {
+      // Verificar se o usuário com o email fornecido existe no sistema
+      const usuario = await Usuario.findOne({ where: { email } });
 
+      if (!usuario) {
+        return response.status(404).json({
+          message:
+            "E-mail de usuário não encontrado. Você deve criar um login.",
+        });
+      }
+
+      // Comparação direta da senha fornecida com a senha armazenada
+      if (senha !== usuario.senha) {
+        return response
+          .status(400)
+          .json({ message: "Email ou senha inválido!" });
+      }
+      // Gerar um token de autenticação
+      const token = jwt.sign(
+        { userId: usuario.id, email: usuario.email },
+        "lab365",
+        { expiresIn: "1h" }
+      );
+      // Retornar a resposta ao cliente com o token
+      return response.status(200).json({ token });
+    } catch (error) {
+      console.log(error);
+      return response.status(500).json({ message: "Erro no servidor" });
+    }
+  }
   async listOneUsuario(request, response) {
     const { id } = request.params;
     const data = await Usuario.findOne({
