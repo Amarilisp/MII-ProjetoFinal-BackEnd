@@ -91,7 +91,7 @@ class UsuarioController {
       return response.status(200).json({ token });
     } catch (error) {
       console.log(error);
-      return response.status(500).json({ message: "Erro no servidor" });
+      return response.status(404).json({ message: "Erro no servidor" });
     }
   }
   async listOneUsuario(request, response) {
@@ -104,6 +104,36 @@ class UsuarioController {
       return response.status(404).send("Usuário não encontrado.");
     }
     return response.status(200).send(data);
+  }
+  async updateUsuario(request, response) {
+    const { id } = request.params;
+    const { nome, sobrenome, genero, telefone } = request.body;
+    try {
+      // Verifique se o usuário com o identificador fornecido existe no sistema
+      const usuario = await Usuario.findOne({ where: { id: id } });
+      if (!usuario) {
+        return response
+          .status(404)
+          .json({ message: "Usuário não encontrado." });
+      }
+
+      if (!nome || !sobrenome || !telefone || !genero) {
+        //criar if de campos obrigatorios - devolver erro 400
+        return response.status(400).send({ message: "Campo obrigatório" });
+      }
+      // Atualize os campos do usuário com os valores fornecidos
+      usuario.nome = nome;
+      usuario.sobrenome = sobrenome;
+      usuario.genero = genero;
+      usuario.telefone = telefone;
+
+      await usuario.save();
+      // Retorne uma resposta de sucesso com os dados atualizados
+      return response.status(204).json(usuario);
+    } catch (error) {
+      console.log(error);
+      return response.status(500).json({ message: "Erro no servidor" });
+    }
   }
 }
 module.exports = new UsuarioController();
