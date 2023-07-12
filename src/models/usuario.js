@@ -1,6 +1,7 @@
 const { connection } = require("../database/connection");
 const { STRING, DATE, INTEGER, ENUM } = require("sequelize");
 const Usuario = connection.define(
+  //define declara o modelo inicial
   "usuario",
   {
     id: {
@@ -33,7 +34,7 @@ const Usuario = connection.define(
 
     genero: {
       type: STRING,
-      allowNull: false,
+      allowNull: true,
     },
 
     dataNascimento: {
@@ -59,6 +60,9 @@ const Usuario = connection.define(
     email: {
       type: STRING,
       allowNull: false,
+      validate: {
+        isEmail: true,
+      },
     },
 
     senha: {
