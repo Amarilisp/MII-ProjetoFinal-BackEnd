@@ -1,9 +1,10 @@
-"use strict";
+"use strict"; // criando a migration
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("usuario", {
+      // para add coluna muda createColumn e nos parametros as colunas
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -40,6 +41,7 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
       senha: {
         type: Sequelize.STRING,
