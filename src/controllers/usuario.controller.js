@@ -163,6 +163,31 @@ class UsuarioController {
       return response.status(400).json({ message: "Erro no servidor" });
     }
   }
-}
 
+  async senha(request, response) {
+    const { id } = request.params;
+    const { senha } = request.body;
+    try {
+      // Verifique se o usuário com o identificador fornecido existe no sistema
+      const usuario = await Usuario.findByPk(id);
+      if (!usuario) {
+        return response
+          .status(404)
+          .json({ message: "Usuário não encontrado." });
+      }
+      usuario.senha = senha;
+
+      await usuario.save();
+      // Retorne uma resposta de sucesso com os dados atualizados
+      return response
+        .status(204)
+        .json({ message: "Senha alterada com sucesso!" });
+    } catch (error) {
+      console.log(error.message);
+      return response
+        .status(400)
+        .json({ message: "Erro no servidor", cause: error.message });
+    }
+  }
+}
 module.exports = new UsuarioController();

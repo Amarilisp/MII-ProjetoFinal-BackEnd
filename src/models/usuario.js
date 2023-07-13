@@ -71,7 +71,11 @@ const Usuario = connection.define(
       validate: {
         len: {
           args: [8, 12],
-          msg: "Senha precisa ter entre 08 e 12 caracteres, sendo no mínimo 1 letra maiúscula, mínimo 1 número e mínimo 1 caracter especial.",
+          msg: "A senha deve conter de 8 a 12 caracteres.",
+        },
+        is: {
+          args: /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+          msg: "A senha deve conter uma letra maiúscula, um número e um caractere especial.",
         },
       },
     },
