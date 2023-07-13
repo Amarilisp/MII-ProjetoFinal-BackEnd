@@ -135,5 +135,34 @@ class UsuarioController {
       return response.status(500).json({ message: "Erro no servidor" });
     }
   }
+
+  async status(request, response) {
+    const { id } = request.params;
+    try {
+      // Verifique se o usuário com o identificador fornecido existe no sistema
+      const usuario = await Usuario.findOne({ where: { id: id } });
+      if (!usuario) {
+        return response
+          .status(404)
+          .json({ message: "Usuário não encontrado." });
+      }
+
+      if (usuario.status.toLowerCase() === "ativo") {
+        usuario.status = "Inativo";
+      } else {
+        usuario.status = "Ativo";
+      }
+
+      await usuario.save();
+      // Retorne uma resposta de sucesso com os dados atualizados
+      return response
+        .status(200)
+        .json({ message: "Status alterado com sucesso!" });
+    } catch (error) {
+      console.log(error);
+      return response.status(400).json({ message: "Erro no servidor" });
+    }
+  }
 }
+
 module.exports = new UsuarioController();
