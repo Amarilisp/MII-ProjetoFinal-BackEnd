@@ -4,7 +4,7 @@ const {
   listMedicamento,
   listMedicamentoid,
   deleteMedicamento,
-  // dadosMedicamento,
+  dadosMedicamento,
 } = require("../controllers/medicamento.controller");
 
 class MedicamentoRouter {
@@ -14,7 +14,7 @@ class MedicamentoRouter {
     medicamentoRoutes.get("/medicamentos", listMedicamento);
     medicamentoRoutes.get("/medicamentos/:id", listMedicamentoid);
     medicamentoRoutes.delete("/medicamentos/:id", deleteMedicamento);
-    // medicamentoRoutes.pacth("/medicamentos/:id", dadosMedicamento);
+    medicamentoRoutes.patch("/medicamentos/:id", dadosMedicamento);
     return medicamentoRoutes;
   }
 }
