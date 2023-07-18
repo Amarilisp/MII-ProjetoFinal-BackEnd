@@ -79,22 +79,13 @@ const Medicamento = connection.define(
         msg: "Quantidade é obrigatório.",
       },
     },
-    created_at: {
-      type: DATE,
-      allowNull: false,
-    },
-    updated_at: {
-      type: DATE,
-      allowNull: false,
-    },
-    deleted_at: {
-      type: DATE,
-      allowNull: true,
-    },
+    createdAt: DATE,
+    updatedAt: DATE,
+    deletedAt: DATE,
   },
   {
     freezeTableName: true,
-    timestamps: true,
+    underscored: true,
     paranoid: true,
   }
 );

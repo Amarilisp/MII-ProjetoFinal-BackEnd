@@ -26,7 +26,7 @@ const Deposito = connection.define(
       },
     },
 
-    c_n_p_j: {
+    cnpj: {
       type: STRING,
       allowNull: false,
       unique: {
@@ -58,7 +58,7 @@ const Deposito = connection.define(
       type: STRING,
       allowNull: false,
     },
-    c_e_p: {
+    cep: {
       type: STRING,
       allowNull: false,
     },
@@ -95,18 +95,9 @@ const Deposito = connection.define(
       allowNull: false,
       defaultValue: "Ativo",
     },
-    created_at: {
-      type: DATE,
-      allowNull: true,
-    },
-    updated_at: {
-      type: DATE,
-      allowNull: true,
-    },
-    deleted_at: {
-      type: DATE,
-      allowNull: true,
-    },
+    createdAt: DATE,
+    updatedAt: DATE,
+    deletedAt: DATE,
   },
   {
     freezeTableName: true,

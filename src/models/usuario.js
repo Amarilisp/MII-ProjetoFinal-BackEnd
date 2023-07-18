@@ -38,12 +38,15 @@ const Usuario = connection.define(
       allowNull: true,
     },
 
-    data_nascimento: {
+    dataNascimento: {
       type: DATE,
       allowNull: false,
+      validade: {
+        msg: "Data de nascimento é obrigatório.",
+      },
     },
 
-    CPF: {
+    cpf: {
       type: STRING,
       allowNull: false,
       validate: {
@@ -63,6 +66,9 @@ const Usuario = connection.define(
       allowNull: false,
       validate: {
         isEmail: true,
+      },
+      validade: {
+        msg: "Email é obrigatório.",
       },
     },
 
@@ -84,28 +90,32 @@ const Usuario = connection.define(
       type: ENUM("Ativo", "Inativo"),
       allowNull: false,
       defaultValue: "Ativo",
+      validade: {
+        msg: "Status é obrigatório.",
+      },
     },
 
-    createdAt: {
-      type: DATE,
-      allowNull: true,
-    },
-    updatedAt: {
-      type: DATE,
-      allowNull: true,
-    },
-    deletedAt: {
-      type: DATE,
-      allowNull: true,
-    },
+    createdAt: DATE,
+    updatedAt: DATE,
+    deletedAt: DATE,
   },
   {
     freezeTableName: true,
-    timestamps: true,
+    underscored: true,
     paranoid: true,
   }
 );
+Usuario.associate = (models) => {
+  Usuario.hasMany(models.Medicamento, {
+    foreignKey: "id_usuario",
+    allowNull: false,
+  });
 
+  Usuario.belongsTo(models.Deposito, {
+    foreignKey: "id_deposito",
+    allowNull: false,
+  });
+};
 module.exports = {
   Usuario,
 };
