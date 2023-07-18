@@ -9,7 +9,7 @@ class UsuarioController {
         sobrenome,
         genero,
         dataNascimento,
-        CPF,
+        cpf,
         telefone,
         email,
         senha,
@@ -29,7 +29,7 @@ class UsuarioController {
           .status(400)
           .send({ message: "Data de nascimento obrigatório" });
       }
-      if (!CPF) {
+      if (!cpf) {
         //criar if de campos obrigatorios - devolver erro 400
         return response.status(400).send({ message: "CPF obrigatório" });
       }
@@ -44,7 +44,7 @@ class UsuarioController {
 
       const validaCPF = await Usuario.findOne({
         // chamando a constante e pedindo pra procurar no banco de dados se o CPF já existe.
-        where: { CPF },
+        where: { cpf },
       });
       //outro if para condições: cpf e email já estão cadastrados
       if (validaCPF) {
@@ -63,7 +63,7 @@ class UsuarioController {
         sobrenome,
         genero,
         dataNascimento,
-        CPF,
+        cpf,
         telefone,
         email,
         senha,
@@ -95,13 +95,14 @@ class UsuarioController {
 
       // Comparação direta da senha fornecida com a senha armazenada
       if (senha !== usuario.senha) {
-        return response
-          .status(400)
-          .json({ message: "Email ou senha inválido!" });
+        return response.status(400).json({ cause: error.message });
       }
       // Gerar um token de autenticação
       const token = jwt.sign(
-        { userId: usuario.id, email: usuario.email },
+        {
+          id_usuario: usuario,
+          email: usuario.email,
+        },
         "lab365",
         { expiresIn: "1h" }
       );
@@ -147,7 +148,9 @@ class UsuarioController {
 
       await usuario.save();
       // Retorne uma resposta de sucesso com os dados atualizados
-      return response.status(204).json(usuario);
+      return response
+        .status(204)
+        .json({ message: "Dados atualizados com sucesso!" });
     } catch (error) {
       console.log(error);
       return response.status(500).json({ message: "Erro no servidor" });
@@ -171,7 +174,7 @@ class UsuarioController {
         usuario.status = "Ativo";
       }
 
-      await Usuario.save();
+      await usuario.save();
       // Retorne uma resposta de sucesso com os dados atualizados
       return response
         .status(200)
