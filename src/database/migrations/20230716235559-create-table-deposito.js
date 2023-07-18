@@ -14,7 +14,7 @@ module.exports = {
       id_usuario: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        model: { tableName: "usuario" },
+        model: { tableName: "Usuario" },
         key: "id",
       },
 
@@ -24,7 +24,7 @@ module.exports = {
         unique: true,
       },
 
-      CNPJ: {
+      cnpj: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
@@ -54,7 +54,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      CEP: {
+      cep: {
         type: Sequelize.STRING,
         allowNull: false,
       },

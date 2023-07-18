@@ -29,7 +29,7 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      CPF: {
+      cpf: {
         type: Sequelize.STRING,
         allowNull: false,
       },

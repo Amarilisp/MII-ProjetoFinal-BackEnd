@@ -13,17 +13,9 @@ module.exports = {
       id_usuario: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-          model: { tableName: "usuario" },
-          key: "id",
-        },
       },
       id_deposito: {
         type: Sequelize.INTEGER,
-        references: {
-          model: { tableName: "deposito" },
-          key: "id",
-        },
         allowNull: false,
       },
       nome_medicamento: {
@@ -31,18 +23,22 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
+
       nome_laboratorio: {
         type: Sequelize.STRING,
         allowNull: false,
       },
+
       descricao: {
         type: Sequelize.STRING,
         allowNull: true,
       },
+
       dosagem: {
         type: Sequelize.DECIMAL,
         allowNull: false,
       },
+
       unidade_da_dosagem: {
         type: Sequelize.ENUM("mg", "mcg", "g", "mL", "%", "outro"),
         allowNull: false,
@@ -50,7 +46,9 @@ module.exports = {
       tipo: {
         type: Sequelize.ENUM("Controlado", "Não controlado"),
         allowNull: false,
+        defaultValue: "Controlado",
       },
+
       preco_unitario: {
         type: Sequelize.DECIMAL,
         allowNull: false,
