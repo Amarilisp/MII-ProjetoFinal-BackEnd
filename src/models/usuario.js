@@ -1,5 +1,6 @@
 const { connection } = require("../database/connection");
 const { STRING, DATE, INTEGER, ENUM } = require("sequelize");
+
 const Usuario = connection.define(
   //define declara o modelo inicial
   "usuario",
@@ -37,7 +38,7 @@ const Usuario = connection.define(
       allowNull: true,
     },
 
-    dataNascimento: {
+    data_nascimento: {
       type: DATE,
       allowNull: false,
     },
@@ -100,7 +101,7 @@ const Usuario = connection.define(
   },
   {
     freezeTableName: true,
-    underscored: true,
+    timestamps: true,
     paranoid: true,
   }
 );

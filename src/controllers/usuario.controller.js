@@ -3,63 +3,81 @@ const jwt = require("jsonwebtoken");
 
 class UsuarioController {
   async createOneUsuario(request, response) {
-    const {
-      nome,
-      sobrenome,
-      genero,
-      dataNascimento,
-      CPF,
-      telefone,
-      email,
-      senha,
-      status,
-    } = request.body;
+    try {
+      const {
+        nome,
+        sobrenome,
+        genero,
+        dataNascimento,
+        CPF,
+        telefone,
+        email,
+        senha,
+      } = request.body;
 
-    if (!nome || !sobrenome || !dataNascimento || !CPF || !email || !senha) {
-      //criar if de campos obrigatorios - devolver erro 400
-      return response.status(400).send({ message: "Campo obrigatório" });
+      if (!nome) {
+        //criar if de campos obrigatorios - devolver erro 400
+        return response.status(400).send({ message: "Nome obrigatório" });
+      }
+      if (!sobrenome) {
+        //criar if de campos obrigatorios - devolver erro 400
+        return response.status(400).send({ message: "Sobrenome obrigatório" });
+      }
+      if (!dataNascimento) {
+        //criar if de campos obrigatorios - devolver erro 400
+        return response
+          .status(400)
+          .send({ message: "Data de nascimento obrigatório" });
+      }
+      if (!CPF) {
+        //criar if de campos obrigatorios - devolver erro 400
+        return response.status(400).send({ message: "CPF obrigatório" });
+      }
+      if (!email) {
+        //criar if de campos obrigatorios - devolver erro 400
+        return response.status(400).send({ message: "Email obrigatório" });
+      }
+      if (!senha) {
+        //criar if de campos obrigatorios - devolver erro 400
+        return response.status(400).send({ message: "Senha obrigatório" });
+      }
+
+      const validaCPF = await Usuario.findOne({
+        // chamando a constante e pedindo pra procurar no banco de dados se o CPF já existe.
+        where: { CPF },
+      });
+      //outro if para condições: cpf e email já estão cadastrados
+      if (validaCPF) {
+        return response.status(409).send({ message: "CPF já cadastrado!" });
+      } // se o cpf já existe, retornar o erro.
+
+      const validaEmail = await Usuario.findOne({
+        where: { email },
+      });
+      if (validaEmail) {
+        return response.status(409).send({ message: "Email já cadastrado!" });
+      }
+
+      const data = await Usuario.create({
+        nome,
+        sobrenome,
+        genero,
+        dataNascimento,
+        CPF,
+        telefone,
+        email,
+        senha,
+      });
+
+      return response.status(201).send({
+        data,
+        message: "Usuário cadastrado com sucesso!",
+      });
+    } catch (error) {
+      return response
+        .status(500)
+        .send({ message: "Erro no servidor.", cause: error.message });
     }
-
-    const validaCPF = await Usuario.findOne({
-      // chamando a constante e pedindo pra procurar no banco de dados se o CPF já existe.
-      where: { CPF },
-    });
-    //outro if para condições: cpf e email já estão cadastrados
-    if (validaCPF) {
-      return response.status(409).send({ message: "CPF já cadastrado!" });
-    } // se o cpf já existe, retornar o erro.
-
-    const validaEmail = await Usuario.findOne({
-      where: { email },
-    });
-    if (validaEmail) {
-      return response.status(409).send({ message: "Email já cadastrado!" });
-    }
-
-    const date = await Usuario.create({
-      nome,
-      sobrenome,
-      genero,
-      dataNascimento,
-      CPF,
-      telefone,
-      email,
-      senha,
-      status: "Ativo",
-    });
-
-    return response.status(201).send({
-      id: date.id,
-      nome: date.nome,
-      sobrenome: date.sobrenome,
-      CPF: date.CPF,
-      genero: date.genero,
-      dataNascimento: date.dataNascimento,
-      telefone: date.telefone,
-      email: date.email,
-      senha: date.senha,
-      status: date.status,
-    });
   }
 
   async loginUsuario(request, response) {
@@ -153,7 +171,7 @@ class UsuarioController {
         usuario.status = "Ativo";
       }
 
-      await usuario.save();
+      await Usuario.save();
       // Retorne uma resposta de sucesso com os dados atualizados
       return response
         .status(200)
@@ -177,7 +195,7 @@ class UsuarioController {
       }
       usuario.senha = senha;
 
-      await usuario.save();
+      await Usuario.save();
       // Retorne uma resposta de sucesso com os dados atualizados
       return response
         .status(204)

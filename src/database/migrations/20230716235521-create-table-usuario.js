@@ -11,7 +11,6 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-
       nome: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -26,7 +25,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      dataNascimento: {
+      data_nascimento: {
         type: Sequelize.DATE,
         allowNull: false,
       },
@@ -48,22 +47,22 @@ module.exports = {
         allowNull: false,
       },
       status: {
-        type: Sequelize.ENUM,
+        type: Sequelize.ENUM("Ativo", "Inativo"),
         allowNull: false,
         defaultValue: "Ativo",
       },
 
-      createAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      updateAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      deleteAt: {
+      deleted_at: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: true,
       },
     });
   },

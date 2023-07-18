@@ -1,5 +1,8 @@
 const { connection } = require("../database/connection");
 const { STRING, DATE, INTEGER, ENUM } = require("sequelize");
+const { Usuario } = require("./usuario");
+const { Medicamento } = require("./medicamento");
+
 const Deposito = connection.define(
   //define declara o modelo inicial
   "deposito",
@@ -108,10 +111,9 @@ const Deposito = connection.define(
   {
     freezeTableName: true,
     paranoid: true,
-    timestamps: false,
+    timestamps: true,
   }
 );
-
 module.exports = {
   Deposito,
 };

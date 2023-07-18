@@ -10,9 +10,12 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
+
       id_usuario: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        model: { tableName: "usuario" },
+        key: "id",
       },
 
       razao_social: {
@@ -21,7 +24,7 @@ module.exports = {
         unique: true,
       },
 
-      c_n_p_j: {
+      CNPJ: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
@@ -51,7 +54,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      c_e_p: {
+      CEP: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -90,11 +93,11 @@ module.exports = {
       },
       created_at: {
         type: Sequelize.DATE,
-        allowNull: true,
+        allowNull: false,
       },
       updated_at: {
         type: Sequelize.DATE,
-        allowNull: true,
+        allowNull: false,
       },
       deleted_at: {
         type: Sequelize.DATE,
