@@ -13,10 +13,19 @@ module.exports = {
       id_usuario: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: { tableName: "usuario" },
+          key: "id",
+        },
       },
+
       id_deposito: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: { tableName: "deposito" },
+          key: "id",
+        },
       },
       nome_medicamento: {
         type: Sequelize.STRING,
@@ -59,11 +68,11 @@ module.exports = {
       },
       created_at: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: true,
       },
       updated_at: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: true,
       },
       deleted_at: {
         type: Sequelize.DATE,

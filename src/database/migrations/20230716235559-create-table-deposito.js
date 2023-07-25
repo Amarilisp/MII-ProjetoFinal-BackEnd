@@ -14,8 +14,10 @@ module.exports = {
       id_usuario: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        model: { tableName: "Usuario" },
-        key: "id",
+        references: {
+          model: { tableName: "usuario" },
+          key: "id",
+        },
       },
 
       razao_social: {
@@ -51,6 +53,10 @@ module.exports = {
       },
 
       logradouro: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      endereco: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -93,11 +99,11 @@ module.exports = {
       },
       created_at: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: true,
       },
       updated_at: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: true,
       },
       deleted_at: {
         type: Sequelize.DATE,
