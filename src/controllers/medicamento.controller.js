@@ -17,19 +17,61 @@ class MedicamentoController {
         preco_unitario,
         quantidade,
       } = request.body;
-      if (
-        !id_usuario ||
-        !id_deposito ||
-        !nome_medicamento ||
-        !nome_laboratorio ||
-        !descricao ||
-        !dosagem ||
-        !unidade_da_dosagem ||
-        !tipo ||
-        !preco_unitario ||
-        !quantidade
-      ) {
-        return response.status(400).send({ message: "Campo Obrigatório" });
+
+      if (!id_usuario) {
+        return response
+          .status(400)
+          .json({ message: "ID do usuário é obrigatório." });
+      }
+
+      if (!id_deposito) {
+        return response
+          .status(400)
+          .json({ message: "ID do depósito é obrigatório." });
+      }
+
+      if (!nome_medicamento) {
+        return response
+          .status(400)
+          .json({ message: "Nome do medicamento é obrigatório." });
+      }
+
+      if (!nome_laboratorio) {
+        return response
+          .status(400)
+          .json({ message: "Nome do laboratório é obrigatório." });
+      }
+
+      if (!descricao) {
+        return response
+          .status(400)
+          .json({ message: "Descrição é obrigatória." });
+      }
+
+      if (!dosagem) {
+        return response.status(400).json({ message: "Dosagem é obrigatória." });
+      }
+
+      if (!unidade_da_dosagem) {
+        return response
+          .status(400)
+          .json({ message: "Unidade da dosagem é obrigatória." });
+      }
+
+      if (!tipo) {
+        return response.status(400).json({ message: "Tipo é obrigatório." });
+      }
+
+      if (!preco_unitario) {
+        return response
+          .status(400)
+          .json({ message: "Preço unitário é obrigatório." });
+      }
+
+      if (!quantidade) {
+        return response
+          .status(400)
+          .json({ message: "Quantidade é obrigatória." });
       }
       const data = await Medicamento.create({
         id_usuario,
@@ -100,14 +142,23 @@ class MedicamentoController {
   }
 
   async deleteMedicamento(request, response) {
-    const { id } = request.params;
-    await Medicamento.destroy({
-      where: { id },
-    });
-    if (!id) {
-      return response.status(404).send("Medicamento não encontrado.");
+    try {
+      const { id } = request.params;
+      const buscaMedicamento = await Medicamento.findByPk(id);
+      if (!buscaMedicamento) {
+        return response.status(404).send("Medicamento não encontrado.");
+      }
+      await Medicamento.destroy({
+        where: {
+          id: id,
+        },
+      });
+      return response.status(204).send();
+    } catch (error) {
+      console.log(error);
+      return response.status(500).json({ message: "Erro no servidor." });
     }
   }
-} // final da classe
+}
 
 module.exports = new MedicamentoController();
