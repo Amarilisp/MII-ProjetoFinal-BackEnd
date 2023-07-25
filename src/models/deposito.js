@@ -58,6 +58,10 @@ const Deposito = connection.define(
       type: STRING,
       allowNull: false,
     },
+    endereco: {
+      type: STRING,
+      allowNull: false,
+    },
     cep: {
       type: STRING,
       allowNull: false,
@@ -95,16 +99,28 @@ const Deposito = connection.define(
       allowNull: false,
       defaultValue: "Ativo",
     },
-    createdAt: DATE,
-    updatedAt: DATE,
-    deletedAt: DATE,
   },
   {
     freezeTableName: true,
-    paranoid: true,
+
     timestamps: true,
   }
 );
+Deposito.associate = (models) => {
+  Deposito.belongsTo(models.usuario, {
+    foreignKey: "id_usuario",
+    allowNull: false,
+  });
+
+  Deposito.hasMany(models.Medicamento, {
+    foreignKey: "id_medicamento",
+    allowNull: false,
+  });
+};
+// Deposito.belongsToMany(Deposito, { through: Relacionamento });
+// Deposito.belongsToMany(Medicamento, { through: Relacionamento });
+// Usuario.hasMany(Medicamento);
+
 module.exports = {
   Deposito,
 };
