@@ -94,10 +94,6 @@ const Usuario = connection.define(
         msg: "Status é obrigatório.",
       },
     },
-
-    createdAt: DATE,
-    updatedAt: DATE,
-    deletedAt: DATE,
   },
   {
     freezeTableName: true,
