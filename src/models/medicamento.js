@@ -1,4 +1,5 @@
 const { connection } = require("../database/connection");
+
 const { STRING, DATE, INTEGER, ENUM, NUMBER, DECIMAL } = require("sequelize");
 
 const Medicamento = connection.define(
@@ -79,9 +80,6 @@ const Medicamento = connection.define(
         msg: "Quantidade é obrigatório.",
       },
     },
-    createdAt: DATE,
-    updatedAt: DATE,
-    deletedAt: DATE,
   },
   {
     freezeTableName: true,
@@ -89,6 +87,21 @@ const Medicamento = connection.define(
     paranoid: true,
   }
 );
+
+Medicamento.associate = (models) => {
+  Medicamento.belongsTo(models.deposito, {
+    foreignKey: "id_deposito",
+    allowNull: false,
+  });
+
+  Medicamento.belongsTo(models.usuario, {
+    foreignKey: "id_usuario",
+    allowNull: false,
+  });
+};
+// Medicamento.belongsToMany(Deposito, { through: Relacionamento });
+// Deposito.belongsToMany(Medicamento, { through: Relacionamento });
+// Usuario.hasMany(Medicamento);
 
 module.exports = {
   Medicamento,
