@@ -80,6 +80,10 @@ Veja os requisitos necessários no arquivo .env_example salvo na pasta raiz do p
 |  17        | Exclusão de Medicamento                           	|
 
 
+Video explicativo sobre o projeto:
+
+
+https://github.com/Amarilisp/MII-ProjetoFinal-BackEnd/assets/86123419/7ce32424-9d56-4fcc-a514-b080eec6618e
 
 
 
